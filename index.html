@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Univora - Study Smarter, Stress Less!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <h1>Univora</h1>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" class="login-btn" id="login-nav-btn">Login</a></li>
+            <li><a href="#" class="signup-btn" id="signup-nav-btn">Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Study Smarter, Stress Less!</h1>
+                <p>Access all your study materials in one place. Organized, simple, and powerful.</p>
+                <div class="hero-buttons">
+                    <button class="primary-btn" id="get-started-btn">Get Started</button>
+                    <button class="secondary-btn" id="learn-more-btn">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/6.0.0/simpleicons.svg" alt="Study Illustration">
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">Why Choose Univora?</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Organized Materials</h3>
+                    <p>All subjects neatly organized by year and units for easy access.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cloud-download-alt"></i>
+                    <h3>Quick Access</h3>
+                    <p>Instantly access PDFs, model papers, and study resources.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Study on the go with our fully responsive design.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Access</h3>
+                    <p>Your study materials are safe and accessible only to you.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>contact <br>snsnarayanac@gmail.com</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+91 9121055512</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Kakinada</p>
+                    </div>
+                </div>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="primary-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Authentication Modal -->
+        <div class="modal" id="auth-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="login-tab">Login</button>
+                    <button class="auth-tab" id="signup-tab">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <h2>Welcome Back!</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                        <span class="forgot-password">Forgot Password?</span>
+                    </div>
+                    <button type="submit" class="primary-btn">Login</button>
+                    <div class="form-footer">
+                        <p>Don't have an account? <span id="switch-to-signup">Sign Up</span></p>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Sign Up</button>
+                    <div class="form-footer">
+                        <p>Already have an account? <span id="switch-to-login">Login</span></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section (Hidden until login) -->
+        <section id="dashboard" class="dashboard hidden">
+            <div class="dashboard-header">
+                <h2>Study Materials Dashboard</h2>
+                <p>Welcome back, <span id="user-name">Student</span>!</p>
+                <button id="logout-btn" class="secondary-btn">Logout</button>
+            </div>
+            
+            <div class="year-selector">
+                <button class="year-btn active" data-year="year1">1st Year (1-2)</button>
+                <button class="year-btn" data-year="year2">2nd Year (2-2)</button>
+            </div>
+            
+            <div class="subjects-container" id="year1-subjects">
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>DE & VC</h3>
+                        <span class="subject-code">CS101</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="de_vc" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="de_vc" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="de_vc" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="de_vc" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="de_vc" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="de_vc" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>BCME</h3>
+                        <span class="subject-code">CS102</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="bcme" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="bcme" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="bcme" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="bcme" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="bcme" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="bcme" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>Chemistry</h3>
+                        <span class="subject-code">CH101</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="chemistry" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="chemistry" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="chemistry" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="chemistry" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="chemistry" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="chemistry" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>English</h3>
+                        <span class="subject-code">EN101</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="english" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="english" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="english" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="english" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="english" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="english" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>Data Structures</h3>
+                        <span class="subject-code">CS103</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="data_structures" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="data_structures" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="data_structures" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="data_structures" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="data_structures" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="data_structures" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subjects-container hidden" id="year2-subjects">
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>OT</h3>
+                        <span class="subject-code">CS201</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="ot" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="ot" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="ot" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="ot" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="ot" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="ot" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>COA</h3>
+                        <span class="subject-code">CS202</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="coa" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="coa" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="coa" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="coa" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="coa" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="coa" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>DBMS</h3>
+                        <span class="subject-code">CS203</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="dbms" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="dbms" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="dbms" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="dbms" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="dbms" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="dbms" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>SMDS</h3>
+                        <span class="subject-code">MA201</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="smds" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="smds" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="smds" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="smds" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="smds" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="smds" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <h3>DE</h3>
+                        <span class="subject-code">EE201</span>
+                    </div>
+                    <div class="units-list">
+                        <div class="unit">
+                            <span>Unit 1</span>
+                            <a href="#" class="download-btn" data-subject="de" data-unit="1"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 2</span>
+                            <a href="#" class="download-btn" data-subject="de" data-unit="2"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 3</span>
+                            <a href="#" class="download-btn" data-subject="de" data-unit="3"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 4</span>
+                            <a href="#" class="download-btn" data-subject="de" data-unit="4"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="unit">
+                            <span>Unit 5</span>
+                            <a href="#" class="download-btn" data-subject="de" data-unit="5"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="model-paper">
+                        <span>Model Paper</span>
+                        <a href="#" class="download-btn" data-subject="de" data-type="model"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notification Toast -->
+        <div class="toast" id="toast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle toast-icon success"></i>
+                <i class="fas fa-exclamation-circle toast-icon error"></i>
+                <div class="toast-message">Message goes here</div>
+            </div>
+            <div class="toast-progress"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About Univora</h3>
+                <p>Univora is your ultimate study companion. Our platform helps students access organized study materials to achieve academic success.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>Kakinada</li>
+                    <li><i class="fas fa-phone"></i> +91 9121055512</li>
+                    <li><i class="fas fa-envelope"></i>snsnarayanac@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Univora - Study Smarter, Stress Less!</p>
+        </div>
+    </footer>
+
+    <!-- Replace old Firebase scripts with these new ones -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAcxhMb40wHnCCUQ0JbMLoJHcUsa14VxVw",
+            authDomain: "univora-5c8d8.firebaseapp.com",
+            projectId: "univora-5c8d8",
+            storageBucket: "univora-5c8d8.firebasestorage.app",
+            messagingSenderId: "951637898917",
+            appId: "1:951637898917:web:3ece018913a51ab5e1ff4c",
+            measurementId: "G-9V8HNEVCVD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Make Firebase services available globally
+        window.auth = auth;
+        window.db = db;
+        window.storage = storage;
+    </script>
+    
+    <!-- Custom Scripts -->
+    <script src="./script.js" type="module"></script>
+</body>
+</html>
