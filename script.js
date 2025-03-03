@@ -44,6 +44,8 @@ const switchToSignup = document.getElementById('switch-to-signup');
 const switchToLogin = document.getElementById('switch-to-login');
 const forgotPassword = document.querySelector('.forgot-password');
 
+const signupPassword = document.getElementById('signup-password');
+const signupConfirm = document.getElementById('signup-confirm');
 
 const dashboardSection = document.getElementById('dashboard');
 const userNameSpan = document.getElementById('user-name');
@@ -61,21 +63,21 @@ const toastProgress = document.querySelector('.toast-progress');
 
 // Helper Functions
 
+// Improve toast function
 function showToast(message, type = 'default', duration = 5000) {
-    toast.className = 'toast show';
-    toast.classList.add(type); // 'success' or 'error'
-    toastMessage.textContent = message;
-
-    // Restart animation on each call
-    toastProgress.style.animation = 'none';
+    // Clear any existing toasts
+    hideToast();
+    
+    // Small delay to ensure animation works
     setTimeout(() => {
+        toast.className = 'toast show ' + type;
+        toastMessage.textContent = message;
         toastProgress.style.animation = `progress ${duration / 1000}s linear`;
-    }, 10); // Small delay to reset animation
-
-    // Hide toast after duration
-    setTimeout(() => {
-        hideToast();
-    }, duration);
+        
+        setTimeout(() => {
+            hideToast();
+        }, duration);
+    }, 100);
 }
 
 function hideToast() {
@@ -92,22 +94,43 @@ function hideDashboard() {
 
 function showModal() {
     authModal.style.display = 'flex';
+    document.body.classList.add('modal-open');
 }
 
 function hideModal() {
     authModal.style.display = 'none';
+    document.body.classList.remove('modal-open');
 }
 
+// Update the activateTab function
 function activateTab(tabId) {
-    const tabs = document.querySelectorAll('.auth-tab');
-    const forms = document.querySelectorAll('.auth-form');
+    // Remove active class from all tabs and forms
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.auth-form').forEach(form => {
+        form.classList.remove('active');
+    });
 
-    tabs.forEach(tab => tab.classList.remove('active'));
-    forms.forEach(form => form.classList.remove('active'));
-
-    document.getElementById(tabId + '-tab').classList.add('active');
-    document.getElementById(tabId + '-form').classList.add('active');
+    // Add active class to selected tab and form
+    document.getElementById(`${tabId}-tab`).classList.add('active');
+    document.getElementById(`${tabId}-form`).classList.add('active');
 }
+
+// Add tab click handlers
+loginTab.addEventListener('click', () => activateTab('login'));
+signupTab.addEventListener('click', () => activateTab('signup'));
+
+// Update switch handlers
+switchToSignup.addEventListener('click', (e) => {
+    e.preventDefault();
+    activateTab('signup');
+});
+
+switchToLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    activateTab('login');
+}); // Add missing closing parenthesis
 
 // Event Listeners
 
@@ -160,6 +183,25 @@ closeModal.addEventListener('click', hideModal);
 switchToSignup.addEventListener('click', () => activateTab('signup'));
 switchToLogin.addEventListener('click', () => activateTab('login'));
 
+// Add click-outside functionality for modal
+authModal.addEventListener('click', (e) => {
+    if (e.target === authModal) {
+        hideModal();
+    }
+});
+
+// Prevent modal close when clicking inside the modal content
+document.querySelector('.modal-content').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// Add ESC key support to close modal
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && authModal.style.display === 'flex') {
+        hideModal();
+    }
+});
+
 // Year Selector
 yearBtns.forEach(btn => {
     btn.addEventListener('click', function() {
@@ -183,62 +225,176 @@ yearBtns.forEach(btn => {
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('login-email').value;
+    
+    // Get values and validate
+    const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
-
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        console.log("Logged in:", user);
-
-        hideModal();
-        showDashboard();
-        userNameSpan.textContent = user.email.split('@')[0];
-
-        showToast('Login successful!', 'success');
-
-    } catch (error) {
-        console.error("Login error:", error);
-        showToast('Login failed: ' + error.message, 'error');
-    }
-});
-
-signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('signup-username').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm').value;
-
-    if (password !== confirmPassword) {
-        showToast("Passwords don't match!", 'error');
+    
+    if (!email || !password) {
+        showToast('Please fill in all fields', 'error');
         return;
     }
 
     try {
+        // Show loading state
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in...';
+
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        hideModal();
+        showDashboard();
+        userNameSpan.textContent = user.displayName || user.email.split('@')[0];
+        showToast('Login successful!', 'success');
+
+    } catch (error) {
+        console.error("Login error:", error);
+        let errorMessage = 'Login failed: ';
+        
+        switch (error.code) {
+            case 'auth/invalid-email':
+                errorMessage += 'Invalid email address';
+                break;
+            case 'auth/user-not-found':
+                errorMessage += 'No account found with this email';
+                break;
+            case 'auth/wrong-password':
+                errorMessage += 'Incorrect password';
+                break;
+            default:
+                errorMessage += error.message;
+        }
+        
+        showToast(errorMessage, 'error');
+    } finally {
+        // Reset button state
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login';
+    }
+});
+
+// Fix the validatePasswords function
+function validatePasswords() {
+    const password = signupPassword.value;
+    const confirm = signupConfirm.value;
+    const hasLettersAndNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+
+    // Reset styles
+    signupPassword.style.borderColor = '#ddd';
+    signupConfirm.style.borderColor = '#ddd';
+
+    // Validate main password
+    if (password.length >= 8 && hasLettersAndNumbers) {
+        signupPassword.style.borderColor = 'var(--success-color)';
+    } else if (password.length > 0) {
+        signupPassword.style.borderColor = 'var(--error-color)';
+    }
+
+    // Validate confirm password
+    if (confirm.length > 0) {
+        if (password === confirm) {
+            signupConfirm.style.borderColor = 'var(--success-color)';
+            return true;
+        } else {
+            signupConfirm.style.borderColor = 'var(--error-color)';
+        }
+    }
+
+    return password.length >= 8 && hasLettersAndNumbers && password === confirm;
+}
+
+// Real-time validation
+signupPassword.addEventListener('input', validatePasswords);
+signupConfirm.addEventListener('input', validatePasswords);
+
+// Clean up event listeners
+signupPassword.addEventListener('input', validatePasswords);
+signupConfirm.addEventListener('input', validatePasswords);
+
+signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('signup-username').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = signupPassword.value;
+    const confirmPassword = signupConfirm.value;
+
+    // Validate username
+    if (username.length < 3 || username.length > 20) {
+        showToast('Username must be between 3 and 20 characters', 'error');
+        return;
+    }
+
+    // Validate email
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        showToast('Please enter a valid email address', 'error');
+        return;
+    }
+
+    // Validate password and confirmation
+    if (!validatePasswords()) {
+        showToast('Please meet the password requirements', 'error');
+        return;
+    }
+
+    try {
+        // Show loading state
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Signing up...';
+
+        // Create user account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Update profile with username
+        // Update profile
         await updateProfile(user, {
             displayName: username
         });
 
-        // Store user data in Firestore
+        // Store in Firestore
         await setDoc(doc(db, 'users', user.uid), {
             username: username,
-            email: email
+            email: email,
+            createdAt: serverTimestamp()
         });
 
-        console.log("Signed up:", user);
+        // Success actions
         hideModal();
         showDashboard();
         userNameSpan.textContent = username;
-
-        showToast('Signup successful!', 'success');
+        showToast('Account created successfully!', 'success');
+        
     } catch (error) {
         console.error("Signup error:", error);
-        showToast('Signup failed: ' + error.message, 'error');
+        
+        // Handle Firebase-specific errors
+        let errorMessage = '';
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                errorMessage = 'This email is already registered';
+                break;
+            case 'auth/invalid-email':
+                errorMessage = 'Please enter a valid email address';
+                break;
+            case 'auth/operation-not-allowed':
+                errorMessage = 'Signup is currently disabled';
+                break;
+            case 'auth/weak-password':
+                errorMessage = 'Password is too weak';
+                break;
+            default:
+                errorMessage = error.message;
+        }
+        
+        showToast(errorMessage, 'error');
+    } finally {
+        // Reset button state
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign Up';
     }
 });
 
@@ -336,4 +492,184 @@ onAuthStateChanged(auth, async user => {
         hideDashboard();
         userNameSpan.textContent = 'Student';
     }
+});
+
+// Clear validation styles when switching forms
+function clearValidationStyles() {
+    signupPassword.style.borderColor = '#ddd';
+    signupConfirm.style.borderColor = '#ddd';
+    signupForm.reset();
+    loginForm.reset();
+}
+
+// Add to your existing tab switching code
+switchToLogin.addEventListener('click', () => {
+    clearValidationStyles();
+    activateTab('login');
+});
+
+switchToSignup.addEventListener('click', () => {
+    clearValidationStyles();
+    activateTab('signup');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Password toggle functionality
+    const setupPasswordToggles = () => {
+        document.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                const passwordField = e.target.closest('.password-field').querySelector('input');
+                const type = passwordField.type === 'password' ? 'text' : 'password';
+                passwordField.type = type;
+                toggle.classList.toggle('fa-eye');
+                toggle.classList.toggle('fa-eye-slash');
+            });
+        });
+    };
+
+    // Password strength checker
+    const checkPasswordStrength = (password) => {
+        let strength = 0;
+        const requirements = {
+            length: password.length >= 8,
+            lowercase: /[a-z]/.test(password),
+            uppercase: /[A-Z]/.test(password),
+            number: /\d/.test(password),
+            special: /[!@#$%^&*]/.test(password)
+        };
+
+        Object.values(requirements).forEach(req => {
+            if (req) strength++;
+        });
+
+        return {
+            score: strength,
+            requirements
+        };
+    };
+
+    // Update password strength indicators
+    const updatePasswordStrength = (password, strengthEl, requirementsEl) => {
+        const requirements = {
+            length: password.length >= 8,
+            lowercase: /[a-z]/.test(password),
+            uppercase: /[A-Z]/.test(password),
+            number: /\d/.test(password),
+            special: /[!@#$%^&*]/.test(password)
+        };
+
+        let strength = Object.values(requirements).filter(Boolean).length;
+
+        // Update strength bar
+        strengthEl.className = 'password-strength';
+        if (strength >= 5) strengthEl.classList.add('strong');
+        else if (strength >= 3) strengthEl.classList.add('medium');
+        else if (strength >= 1) strengthEl.classList.add('weak');
+
+        // Update requirement list items
+        const reqList = requirementsEl.querySelectorAll('li');
+        reqList.forEach(item => {
+            const requirement = item.dataset.requirement;
+            const icon = item.querySelector('i');
+            
+            if (requirements[requirement]) {
+                item.classList.remove('invalid');
+                item.classList.add('valid');
+                icon.className = 'fas fa-check';
+            } else {
+                item.classList.remove('valid');
+                item.classList.add('invalid');
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        // Return overall validation status
+        return strength === 5;
+    };
+
+    // Form validation
+    const validateForm = (formEl) => {
+        const inputs = formEl.querySelectorAll('input[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            const group = input.closest('.form-group');
+            group.classList.remove('success', 'error');
+
+            if (input.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(input.value)) {
+                    group.classList.add('error');
+                    isValid = false;
+                } else {
+                    group.classList.add('success');
+                }
+            } else if (input.type === 'password') {
+                const strengthScore = checkPasswordStrength(input.value).score;
+                if (strengthScore < 3) {
+                    group.classList.add('error');
+                    isValid = false;
+                } else {
+                    group.classList.add('success');
+                }
+            } else if (!input.value.trim()) {
+                group.classList.add('error');
+                isValid = false;
+            } else {
+                group.classList.add('success');
+            }
+        });
+
+        return isValid;
+    };
+
+    // Setup form handlers
+    const setupForms = () => {
+        const forms = document.querySelectorAll('.auth-form');
+        forms.forEach(form => {
+            const passwordField = form.querySelector('input[type="password"]');
+            if (passwordField) {
+                const strengthEl = form.querySelector('.password-strength');
+                const requirementsEl = form.querySelector('.password-requirements');
+                
+                passwordField.addEventListener('input', () => {
+                    updatePasswordStrength(passwordField.value, strengthEl, requirementsEl);
+                });
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateForm(form)) {
+                    // Proceed with form submission
+                    console.log('Form is valid, proceeding with submission');
+                }
+            });
+        });
+    };
+
+    // Add real-time password validation
+    const passwordField = document.getElementById('signup-password');
+    const strengthEl = document.querySelector('.password-strength');
+    const requirementsEl = document.querySelector('.password-requirements');
+
+    passwordField.addEventListener('input', (e) => {
+        const isValid = updatePasswordStrength(e.target.value, strengthEl, requirementsEl);
+        const formGroup = e.target.closest('.form-group');
+        
+        if (e.target.value.length > 0) {
+            if (isValid) {
+                formGroup.classList.add('success');
+                formGroup.classList.remove('error');
+            } else {
+                formGroup.classList.add('error');
+                formGroup.classList.remove('success');
+            }
+        } else {
+            formGroup.classList.remove('success', 'error');
+        }
+    });
+
+    // Initialize
+    setupPasswordToggles();
+    setupForms();
 });

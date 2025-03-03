@@ -32,6 +32,11 @@ body {
     overflow-x: hidden;
 }
 
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
 a {
     text-decoration: none;
     color: var(--primary-color);
@@ -140,6 +145,13 @@ img {
     color: white;
     transform: translateY(-3px);
     box-shadow: var(--box-shadow);
+}
+
+/* Disabled button state */
+.primary-btn:disabled {
+    background-color: var(--gray-color);
+    cursor: not-allowed;
+    transform: none !important;
 }
 
 /* ===== NAVBAR ===== */
@@ -369,13 +381,14 @@ img {
 
 .form-group {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--dark-color);
+    color: var (--dark-color);
 }
 
 .form-group input,
@@ -396,6 +409,267 @@ img {
     box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
 }
 
+/* Form Validation Styles */
+.required {
+    color: var(--error-color);
+    margin-left: 4px;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-group input:invalid:not(:focus) {
+    border-color: var(--error-color);
+}
+
+.form-group input:invalid:not(:focus) + .error-message {
+    display: block;
+}
+
+.form-group input:required:valid {
+    border-color: var (--success-color);
+}
+
+/* Form Validation Styles */
+.form-group input {
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+.form-group input:valid:not([type="password"]) {
+    border-color: var(--success-color);
+}
+
+.form-group input[type="password"]:valid {
+    border-color: initial;
+}
+
+.form-group input:invalid:not(:placeholder-shown):not([type="password"]) {
+    border-color: var(--error-color);
+}
+
+/* Show tooltip only when input is empty or invalid */
+.info-icon[data-tooltip] {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.form-group input:valid + label .info-icon,
+.form-group input:not(:placeholder-shown) + label .info-icon {
+    opacity: 0;
+}
+
+/* Password field styles */
+.form-group input[type="password"] {
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="password"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+/* Override any browser defaults */
+.form-group input[type="password"]:valid,
+.form-group input[type="password"]:invalid {
+    border-color: #ddd;
+}
+
+/* JavaScript-controlled validation states */
+.form-group input[type="password"][style*="var(--success-color)"] {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.form-group input[type="password"][style*="var(--error-color)"] {
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Password Field Styles */
+.password-field {
+    position: relative;
+}
+
+.password-field .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gray-color);
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.password-field .toggle-password:hover {
+    color: var(--primary-color);
+}
+
+.password-strength {
+    height: 4px;
+    background: #eee;
+    margin-top: 8px;
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.password-strength.weak {
+    background: var(--error-color);
+    width: 25%;
+}
+
+.password-strength.medium {
+    background: #ffc107;
+    width: 50%;
+}
+
+.password-strength.strong {
+    background: var(--success-color);
+    width: 100%;
+}
+
+.password-requirements {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--gray-color);
+}
+
+.password-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
+.password-requirements li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+.password-requirements li i {
+    font-size: 0.7rem;
+}
+
+.password-requirements li.valid {
+    color: var(--success-color);
+}
+
+.password-requirements li.invalid {
+    color: var(--error-color);
+}
+
+/* Form Validation Enhancement */
+.form-group.success input {
+    border-color: var(--success-color);
+}
+
+.form-group.error input {
+    border-color: var(--error-color);
+}
+
+.form-group .validation-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.form-group.success .validation-icon.success {
+    display: block;
+    color: var(--success-color);
+}
+
+.form-group.error .validation-icon.error {
+    display: block;
+    color: var(--error-color);
+}
+
+.form-group .error-message {
+    color: var(--error-color);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+/* Password Field Validation Styles */
+.form-group.password-field.success input {
+    border-color: var(--success-color) !important;
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.form-group.password-field.error input {
+    border-color: var(--error-color) !important;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+.password-requirements li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+    transition: color 0.3s ease;
+}
+
+.password-requirements li i {
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+}
+
+.password-requirements li.valid {
+    color: var(--success-color);
+}
+
+.password-requirements li.invalid {
+    color: var(--error-color);
+}
+
+.password-requirements li.valid i {
+    color: var(--success-color);
+}
+
+.password-requirements li.invalid i {
+    color: var(--error-color);
+}
+
+/* Strength bar styles */
+.password-strength {
+    height: 4px;
+    background: #eee;
+    margin-top: 8px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.password-strength.weak {
+    background: var(--error-color);
+    width: 33%;
+}
+
+.password-strength.medium {
+    background: #ffc107;
+    width: 66%;
+}
+
+.password-strength.strong {
+    background: var(--success-color);
+    width: 100%;
+}
+
 /* ===== AUTHENTICATION MODAL ===== */
 .modal {
     display: none;
@@ -408,6 +682,13 @@ img {
     z-index: 1001;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* Allow modal to scroll */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFadeIn 0.3s ease;
 }
 
 .modal-content {
@@ -419,6 +700,9 @@ img {
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     animation: modalFadeIn 0.3s ease;
+    max-height: 90vh; /* Limit height to prevent overflow */
+    overflow-y: auto; /* Allow content to scroll */
+    margin: 2rem auto; /* Add margin for better mobile experience */
 }
 
 @keyframes modalFadeIn {
@@ -457,6 +741,7 @@ img {
     cursor: pointer;
     transition: var(--transition);
     position: relative;
+    outline: none;
 }
 
 .auth-tab.active {
@@ -475,10 +760,13 @@ img {
 
 .auth-form {
     display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .auth-form.active {
     display: block;
+    opacity: 1;
 }
 
 .auth-form h2 {
@@ -656,7 +944,7 @@ img {
     flex-direction: column;
     min-width: 300px;
     max-width: 400px;
-    z-index: 9999;
+    z-index: 10000;
     transform: translateY(100px);
     opacity: 0;
     visibility: hidden;
@@ -831,6 +1119,42 @@ img {
     color: #adb5bd;
 }
 
+/* Info Icon and Tooltip Styles */
+.info-icon {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+    cursor: help;
+    position: relative;
+}
+
+.info-icon:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+}
+
+.info-icon:hover::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+}
+
 /* ===== RESPONSIVE STYLES ===== */
 @media screen and (max-width: 992px) {
     .hero {
@@ -913,4 +1237,146 @@ img {
     .modal-content {
         padding: 1.5rem;
     }
+}
+
+/* Mobile Optimization Styles */
+@media screen and (max-width: 368px) {
+    /* Adjust general padding */
+    .navbar, .hero, .features, .contact, .dashboard {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Responsive text sizes */
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        padding: 1rem;
+        width: 95%;
+        margin: 1rem;
+    }
+
+    /* Dashboard header optimization */
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        position: relative;
+        padding: 1rem;
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.4rem;
+    }
+
+    #logout-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem;
+        min-width: auto;
+        width: auto;
+        aspect-ratio: 1;
+        border-radius: 50%;
+    }
+
+    #logout-btn span {
+        display: none;
+    }
+
+    #logout-btn i {
+        margin: 0;
+    }
+
+    /* Year selector buttons */
+    .year-selector {
+        flex-wrap: wrap;
+    }
+
+    .year-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Subject cards */
+    .subjects-container {
+        grid-template-columns: 1fr;
+    }
+
+    .subject-card {
+        margin-bottom: 1rem;
+    }
+
+    .subject-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .subject-code {
+        font-size: 0.8rem;
+    }
+
+    /* Unit list adjustments */
+    .unit {
+        padding: 0.6rem;
+    }
+
+    .unit span {
+        font-size: 0.9rem;
+    }
+
+    /* Contact form adjustments */
+    .contact-form {
+        padding: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.6rem;
+    }
+}
+
+/* Update form validation styles */
+.form-group input[type="password"] {
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="password"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+/* Remove any existing password-specific validation styles */
+.form-group input[type="password"]:valid,
+.form-group input[type="password"]:invalid {
+    border-color: #ddd;
+}
+
+/* Let JavaScript handle the validation colors */
+.form-group input[type="password"].valid {
+    border-color: var(--success-color) !important;
+}
+
+.form-group input[type="password"].invalid {
+    border-color: var(--error-color) !important;
+}
+
+/* JavaScript-controlled validation states */
+.form-group input[type="password"][style*="var(--success-color)"] {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.form-group input[type="password"][style*="var(--error-color)"] {
+    background-color: rgba(220, 53, 69, 0.05);
 }
