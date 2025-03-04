@@ -1175,6 +1175,32 @@ img {
     .contact-container {
         flex-direction: column;
     }
+
+    #logout-btn {
+        border: none;
+        background: none;
+        padding: 0.5rem;
+        min-width: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #logout-btn:hover {
+        background-color: rgba(67, 97, 238, 0.1);
+    }
+
+    #logout-btn span {
+        display: none;
+    }
+
+    #logout-btn i {
+        margin: 0;
+        font-size: 1.2rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1379,4 +1405,14 @@ img {
 
 .form-group input[type="password"][style*="var(--error-color)"] {
     background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Desktop-only styles (above 992px) */
+#logout-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    transition: var(--transition);
 }
