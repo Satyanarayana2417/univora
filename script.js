@@ -28,6 +28,7 @@ const preloader = document.querySelector('.preloader');
 const navbar = document.getElementById('navbar');
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.querySelector('.nav-links');
+const allNavLinks = document.querySelectorAll('.nav-links a');
 
 const loginNavBtn = document.getElementById('login-nav-btn');
 const signupNavBtn = document.getElementById('signup-nav-btn');
@@ -158,6 +159,29 @@ window.addEventListener('scroll', () => {
 // Mobile Menu Toggle
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Add click handlers for all navigation links
+allNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        // Close mobile menu if it's open
+        if (window.innerWidth <= 768) {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768 && 
+        !navLinks.contains(e.target) && 
+        !menuToggle.contains(e.target) &&
+        navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
 });
 
 // Authentication Modal

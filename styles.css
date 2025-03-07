@@ -37,6 +37,11 @@ body.modal-open {
     overflow: hidden;
 }
 
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
 a {
     text-decoration: none;
     color: var(--primary-color);
@@ -184,6 +189,7 @@ img {
 .nav-links {
     display: flex;
     align-items: center;
+    transition: left 0.3s ease;
 }
 
 .nav-links li {
@@ -1217,8 +1223,9 @@ img {
         flex-direction: column;
         background-color: white;
         padding: 2rem;
-        transition: var(--transition);
+        transition: left 0.3s ease;
         z-index: 999;
+        overflow-y: auto;
     }
     
     .nav-links.active {
