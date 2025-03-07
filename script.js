@@ -84,8 +84,11 @@ function hideToast() {
     toast.className = 'toast';  // Remove 'show' and type classes
 }
 
+// Update showDashboard function
 function showDashboard() {
     dashboardSection.classList.remove('hidden');
+    // Scroll to dashboard section
+    dashboardSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function hideDashboard() {
@@ -246,6 +249,10 @@ loginForm.addEventListener('submit', async (e) => {
 
         hideModal();
         showDashboard();
+        // Scroll to dashboard section after successful login
+        setTimeout(() => {
+            window.location.href = '#dashboard';
+        }, 300);
         userNameSpan.textContent = user.displayName || user.email.split('@')[0];
         showToast('Login successful!', 'success');
 
@@ -364,6 +371,10 @@ signupForm.addEventListener('submit', async (e) => {
         // Success actions
         hideModal();
         showDashboard();
+        // Scroll to dashboard section after successful signup
+        setTimeout(() => {
+            window.location.href = '#dashboard';
+        }, 300);
         userNameSpan.textContent = username;
         showToast('Account created successfully!', 'success');
         
