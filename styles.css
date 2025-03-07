@@ -711,29 +711,43 @@ img {
     margin: 2rem auto; /* Add margin for better mobile experience */
 }
 
+/* Update close modal button styles */
+.close-modal {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--gray-color);
+    transition: var(--transition);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 10;
+}
+
+.close-modal:hover {
+    color: var(--error-color);
+    transform: scale(1.1);
+}
+
 @keyframes modalFadeIn {
     from { opacity: 0; transform: translateY(-50px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.close-modal {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--gray-color);
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    color: var(--error-color);
-}
-
+/* Update modal header spacing */
 .auth-tabs {
     display: flex;
-    margin-bottom: 2rem;
+    margin: 1.5rem 0 2rem;
     border-bottom: 1px solid #eee;
+    position: relative;
+    padding-right: 40px; /* Make space for close button */
 }
 
 .auth-tab {
