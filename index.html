@@ -86,11 +86,11 @@
                 <div class="contact-info">
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
-                        <p>contact <br>snsnarayanac@gmail.com</p>
+                        <p>contact <br>hubunivora@gmail.com</p>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
-                        <p>+91 9121055512</p>
+                        <p>+91 XXXXX XXXXX</p>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-map-marker-alt"></i>
@@ -157,27 +157,21 @@
                                title="Username must be between 3 and 20 characters">
                     </div>
                     <div class="form-group">
-                        <label for="signup-email">Email <span class="required">*</span></label>
-                        <input type="email" id="signup-email" required>
-                        <i class="fas fa-check validation-icon success"></i>
-                        <i class="fas fa-times validation-icon error"></i>
-                        <div class="error-message">Please enter a valid email address</div>
+                        <label for="signup-email">Email <span class="required">*</span>
+                            <i class="fas fa-info-circle info-icon" data-tooltip="Enter a valid email address"></i>
+                        </label>
+                        <input type="email" id="signup-email" required 
+                               placeholder="Enter email address">
                     </div>
-                    <div class="form-group password-field">
-                        <label for="signup-password">Password <span class="required">*</span></label>
-                        <input type="password" id="signup-password" required>
-                        <i class="fas fa-eye toggle-password"></i>
-                        <div class="password-strength"></div>
-                        <div class="password-requirements">
-                            <p>Password must contain:</p>
-                            <ul>
-                                <li data-requirement="length"><i class="fas fa-times"></i> At least 8 characters</li>
-                                <li data-requirement="lowercase"><i class="fas fa-times"></i> One lowercase letter</li>
-                                <li data-requirement="uppercase"><i class="fas fa-times"></i> One uppercase letter</li>
-                                <li data-requirement="number"><i class="fas fa-times"></i> One number</li>
-                                <li data-requirement="special"><i class="fas fa-times"></i> One special character</li>
-                            </ul>
-                        </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password <span class="required">*</span>
+                            <i class="fas fa-info-circle info-icon" data-tooltip="At least 8 characters with numbers and letters"></i>
+                        </label>
+                        <input type="password" id="signup-password" required 
+                               placeholder="Enter password" 
+                               minlength="8"
+                               pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+                               title="Password must be at least 8 characters and include letters and numbers">
                     </div>
                     <div class="form-group">
                         <label for="signup-confirm">Confirm Password <span class="required">*</span>
@@ -584,8 +578,8 @@
                 <h3>Contact Us</h3>
                 <ul>
                     <li><i class="fas fa-map-marker-alt"></i>Kakinada</li>
-                    <li><i class="fas fa-phone"></i> +91 9121055512</li>
-                    <li><i class="fas fa-envelope"></i>snsnarayanac@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +91 XXXXX XXXXX</li>
+                    <li><i class="fas fa-envelope"></i>hubunivora@gmail.com</li>
                 </ul>
             </div>
         </div>

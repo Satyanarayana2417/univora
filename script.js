@@ -28,7 +28,6 @@ const preloader = document.querySelector('.preloader');
 const navbar = document.getElementById('navbar');
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.querySelector('.nav-links');
-const allNavLinks = document.querySelectorAll('.nav-links a');
 
 const loginNavBtn = document.getElementById('login-nav-btn');
 const signupNavBtn = document.getElementById('signup-nav-btn');
@@ -85,11 +84,8 @@ function hideToast() {
     toast.className = 'toast';  // Remove 'show' and type classes
 }
 
-// Update showDashboard function
 function showDashboard() {
     dashboardSection.classList.remove('hidden');
-    // Scroll to dashboard section
-    dashboardSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function hideDashboard() {
@@ -159,29 +155,6 @@ window.addEventListener('scroll', () => {
 // Mobile Menu Toggle
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
-    document.body.classList.toggle('menu-open');
-});
-
-// Add click handlers for all navigation links
-allNavLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        // Close mobile menu if it's open
-        if (window.innerWidth <= 768) {
-            navLinks.classList.remove('active');
-            document.body.classList.remove('menu-open');
-        }
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768 && 
-        !navLinks.contains(e.target) && 
-        !menuToggle.contains(e.target) &&
-        navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        document.body.classList.remove('menu-open');
-    }
 });
 
 // Authentication Modal
@@ -273,10 +246,6 @@ loginForm.addEventListener('submit', async (e) => {
 
         hideModal();
         showDashboard();
-        // Scroll to dashboard section after successful login
-        setTimeout(() => {
-            window.location.href = '#dashboard';
-        }, 300);
         userNameSpan.textContent = user.displayName || user.email.split('@')[0];
         showToast('Login successful!', 'success');
 
@@ -395,10 +364,6 @@ signupForm.addEventListener('submit', async (e) => {
         // Success actions
         hideModal();
         showDashboard();
-        // Scroll to dashboard section after successful signup
-        setTimeout(() => {
-            window.location.href = '#dashboard';
-        }, 300);
         userNameSpan.textContent = username;
         showToast('Account created successfully!', 'success');
         
@@ -546,165 +511,4 @@ switchToLogin.addEventListener('click', () => {
 switchToSignup.addEventListener('click', () => {
     clearValidationStyles();
     activateTab('signup');
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Password toggle functionality
-    const setupPasswordToggles = () => {
-        document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                const passwordField = e.target.closest('.password-field').querySelector('input');
-                const type = passwordField.type === 'password' ? 'text' : 'password';
-                passwordField.type = type;
-                toggle.classList.toggle('fa-eye');
-                toggle.classList.toggle('fa-eye-slash');
-            });
-        });
-    };
-
-    // Password strength checker
-    const checkPasswordStrength = (password) => {
-        let strength = 0;
-        const requirements = {
-            length: password.length >= 8,
-            lowercase: /[a-z]/.test(password),
-            uppercase: /[A-Z]/.test(password),
-            number: /\d/.test(password),
-            special: /[!@#$%^&*]/.test(password)
-        };
-
-        Object.values(requirements).forEach(req => {
-            if (req) strength++;
-        });
-
-        return {
-            score: strength,
-            requirements
-        };
-    };
-
-    // Update password strength indicators
-    const updatePasswordStrength = (password, strengthEl, requirementsEl) => {
-        const requirements = {
-            length: password.length >= 8,
-            lowercase: /[a-z]/.test(password),
-            uppercase: /[A-Z]/.test(password),
-            number: /\d/.test(password),
-            special: /[!@#$%^&*]/.test(password)
-        };
-
-        let strength = Object.values(requirements).filter(Boolean).length;
-
-        // Update strength bar
-        strengthEl.className = 'password-strength';
-        if (strength >= 5) strengthEl.classList.add('strong');
-        else if (strength >= 3) strengthEl.classList.add('medium');
-        else if (strength >= 1) strengthEl.classList.add('weak');
-
-        // Update requirement list items
-        const reqList = requirementsEl.querySelectorAll('li');
-        reqList.forEach(item => {
-            const requirement = item.dataset.requirement;
-            const icon = item.querySelector('i');
-            
-            if (requirements[requirement]) {
-                item.classList.remove('invalid');
-                item.classList.add('valid');
-                icon.className = 'fas fa-check';
-            } else {
-                item.classList.remove('valid');
-                item.classList.add('invalid');
-                icon.className = 'fas fa-times';
-            }
-        });
-
-        // Return overall validation status
-        return strength === 5;
-    };
-
-    // Form validation
-    const validateForm = (formEl) => {
-        const inputs = formEl.querySelectorAll('input[required]');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            const group = input.closest('.form-group');
-            group.classList.remove('success', 'error');
-
-            if (input.type === 'email') {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(input.value)) {
-                    group.classList.add('error');
-                    isValid = false;
-                } else {
-                    group.classList.add('success');
-                }
-            } else if (input.type === 'password') {
-                const strengthScore = checkPasswordStrength(input.value).score;
-                if (strengthScore < 3) {
-                    group.classList.add('error');
-                    isValid = false;
-                } else {
-                    group.classList.add('success');
-                }
-            } else if (!input.value.trim()) {
-                group.classList.add('error');
-                isValid = false;
-            } else {
-                group.classList.add('success');
-            }
-        });
-
-        return isValid;
-    };
-
-    // Setup form handlers
-    const setupForms = () => {
-        const forms = document.querySelectorAll('.auth-form');
-        forms.forEach(form => {
-            const passwordField = form.querySelector('input[type="password"]');
-            if (passwordField) {
-                const strengthEl = form.querySelector('.password-strength');
-                const requirementsEl = form.querySelector('.password-requirements');
-                
-                passwordField.addEventListener('input', () => {
-                    updatePasswordStrength(passwordField.value, strengthEl, requirementsEl);
-                });
-            }
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (validateForm(form)) {
-                    // Proceed with form submission
-                    console.log('Form is valid, proceeding with submission');
-                }
-            });
-        });
-    };
-
-    // Add real-time password validation
-    const passwordField = document.getElementById('signup-password');
-    const strengthEl = document.querySelector('.password-strength');
-    const requirementsEl = document.querySelector('.password-requirements');
-
-    passwordField.addEventListener('input', (e) => {
-        const isValid = updatePasswordStrength(e.target.value, strengthEl, requirementsEl);
-        const formGroup = e.target.closest('.form-group');
-        
-        if (e.target.value.length > 0) {
-            if (isValid) {
-                formGroup.classList.add('success');
-                formGroup.classList.remove('error');
-            } else {
-                formGroup.classList.add('error');
-                formGroup.classList.remove('success');
-            }
-        } else {
-            formGroup.classList.remove('success', 'error');
-        }
-    });
-
-    // Initialize
-    setupPasswordToggles();
-    setupForms();
 });
